@@ -1,9 +1,11 @@
 package com.workapp.springjwt.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.workapp.springjwt.models.User;
 import com.workapp.springjwt.payload.response.MessageResponse;
 import com.workapp.springjwt.repository.UserRepository;
+import com.workapp.springjwt.security.services.UserDetailsImpl;
 import com.workapp.springjwt.security.services.UserDetailsServiceImpl;
 
 @RestController
@@ -28,6 +31,8 @@ public class UserController {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	private UserDetailsImpl userDetails;
     
 	@Autowired
 	private UserDetailsServiceImpl userService;
@@ -49,9 +54,6 @@ public class UserController {
 			return ResponseEntity
 					.badRequest()
 					.body(new MessageResponse("Error: User is not found!"));
-	//	user.setFirstName("dd");
-		
-		//userRepository.save(user);
 		System.out.println("user by id "+id);
 		return ResponseEntity.ok().body(userOptional);	
 		
@@ -74,9 +76,9 @@ public class UserController {
 
 	
 	
-/*	@PutMapping("/update/{id}")
-	public ResponseEntity<MessageResponse> updateUser( @PathVariable( name = "id" ) long id ,
-			@RequestBody User  UserDetailsServiceImpl)
+	/*@PutMapping("/update/{id}")
+	public ResponseEntity<Object> updateUser( @PathVariable( name = "id" ) long id ,
+			@RequestBody User  user)
 	 {		
 	
 			Optional<User> userOptional =userRepository.findById(id);
@@ -85,11 +87,33 @@ public class UserController {
 						.badRequest()
 						.body(new MessageResponse("Error: User is not found!"));
 			
-			userOptional.setFirstName(UserDetailsServiceImpl.getFirstName());
+			user.setFirstName(userDetails.getFirstName());
+        	return ResponseEntity.ok().body(userOptional);	
 		
-}*/
+}
+	*/
+	/*@PutMapping("/update/{id}")
+	public ResponseEntity<Object> updateUser(@PathVariable long id,
+	        @RequestBody User user) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+          	return ResponseEntity
+					.badRequest()
+			.body(new MessageResponse("Error: User is not found!"));
+
+        } else {
+
+	    	UserDetailsServiceImpl.updateAddress(id, user);
+        	//userRepository
+        	ResponseEntity.ok().body(new MessageResponse("User Updated!"));
+        	return ResponseEntity.ok().body(userOptional);	
+        	        }
+
+	    
+	}*/
+
 	
-	@PutMapping("/update/{id}")
+	/*@PutMapping("/update/{id}")	
     public ResponseEntity<Object> updateUser( @PathVariable( name = "id" ) long id ,User user,
 			@RequestBody User UserDetailsServiceImpl ) {
         Optional<User> userOptional = userRepository.findById(id);
@@ -100,16 +124,44 @@ public class UserController {
 
         } 
         else {
-        	userRepository.findById(id);
-        	UserDetailsServiceImpl.setEmail(UserDetailsServiceImpl.getEmail());
-        	UserDetailsServiceImpl.setPassword(UserDetailsServiceImpl.getPassword());
-        	UserDetailsServiceImpl.setUsername(UserDetailsServiceImpl.getUsername());
+        	user.setEmail(UserDetailsServiceImpl.getEmail());
+        	user.setPassword(UserDetailsServiceImpl.getPassword());
+        	user.setUsername(UserDetailsServiceImpl.getUsername());
         	
-			UserDetailsServiceImpl.setFirstName(UserDetailsServiceImpl.getFirstName());
-        	ResponseEntity.ok().body(new MessageResponse("Error: User Updated!"));
-        	return ResponseEntity.ok().body(userOptional);	
+			user.setFirstName(UserDetailsServiceImpl.getFirstName());
+        return	ResponseEntity.ok().body(new MessageResponse(" User Updated!"));
+        	//return ResponseEntity.ok().body(userOptional);	
         	        }
     
-}
+}*/
+	 @PutMapping("/changeuserdetails/{id}")
+	  public ResponseEntity<Object> updateTutorial(@PathVariable("id") long id, @RequestBody User user) {
+	    Optional<User> userData = userRepository.findById(id);
+	    if (!userData.isPresent()) {
+          	return ResponseEntity
+					.badRequest()
+			.body(new MessageResponse("Error: User is not found!"));
+
+	    }
+	    else {
+	      User _user = userData.get();
+	      _user.setFirstName(user.getFirstName());
+	      _user.setLastName(user.getLastName());
+	      _user.setPhone(user.getPhone());
+	      _user.setGenre(user.getGenre());
+	      _user.setHightDegres(user.getHightDegres());  
+	      _user.setIssuedBy(user.getIssuedBy());
+	      _user.setYearOfPassing(user.getYearOfPassing());  
+		  _user.setSkill(user.getSkill());
+		  _user.setJobType(user.getJobType());
+		  _user.setJobApplyFor(user.getJobApplyFor());
+		  _user.setWorkExperience(user.getWorkExperience());
+		  _user.setExpectedSalary(user.getExpectedSalary());	 
+			 
+	      
+	      
+	      return new ResponseEntity<>(userRepository.save(_user), HttpStatus.OK);
+	    }
+	  }
 
 }
