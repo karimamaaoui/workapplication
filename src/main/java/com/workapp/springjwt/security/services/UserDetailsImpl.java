@@ -18,20 +18,56 @@ public class UserDetailsImpl implements UserDetails {
 	private Long id;
 
 	private String username;
-
 	private String email;
-
 	@JsonIgnore
 	private String password;
+	
+	private String firstName;
+	private Long phone;
+	private String lastName;
+	private String hightDegres;
 
+	private Long issuedBy;
+	private Long yearOfPassing;
+	private String skill;
+	private String jobType;
+	
+	private String jobApplyFor;
+	private String workExperience;
+	private Long expectedSalary;
+
+	
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Long id, String username, String email, String password,
+			 String firstName,
+	 Long phone,
+	 String lastName,
+	 String hightDegres,
+	 Long issuedBy,
+	 Long yearOfPassing,
+	 String skill,
+	 String jobType,
+	 String jobApplyFor,
+	 String workExperience,
+	 Long expectedSalary,
+
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.firstName=firstName;
+		this.lastName=lastName;
+		this.phone=phone;
+		this.hightDegres=hightDegres;
+		this.issuedBy=issuedBy;
+		this.yearOfPassing=yearOfPassing;
+		this.skill=skill;
+		this.jobType=jobType;
+		this.jobApplyFor=jobApplyFor;
+		this.workExperience=workExperience;
+		this.expectedSalary=expectedSalary;
 		this.authorities = authorities;
 	}
 
@@ -45,6 +81,17 @@ public class UserDetailsImpl implements UserDetails {
 				user.getUsername(), 
 				user.getEmail(),
 				user.getPassword(), 
+				user.getFirstName(),
+				 user.getPhone(),
+				 user.getLastName(),
+				 user.getHightDegres(),
+				 user.getIssuedBy(),
+				 user.getYearOfPassing(),
+				 user.getSkill(),
+				 user.getJobType(),
+				 user.getJobApplyFor(),
+				 user.getWorkExperience(),
+				 user.getExpectedSalary(),
 				authorities);
 	}
 
@@ -66,11 +113,57 @@ public class UserDetailsImpl implements UserDetails {
 		return password;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastname() {
+		return lastName;
+	}
+	public Long getPhone() {
+		return phone;
+	}
 	@Override
 	public String getUsername() {
 		return username;
 	}
+	
+	
+	 public String hightDegres() {
+		 return hightDegres;
+	 }
+	 public Long issuedBy() {
+		 return issuedBy;
+	 }
+	 
+	 public Long yearOfPassing() {
+		 return yearOfPassing;
+	 }
+	 
+	 public String skill ()
+	 {
+		 return skill;
+	 }
+	 
+	 public String jobType()
+	 {
+		 return jobType;
+	 }
+	 
+	 public String jobApplyFor()
+	 {
+		 return jobApplyFor;
+	 }
+	 
+	 public String workExperience() {
+		 return workExperience;
+	 }
+	 
+	 public Long expectedSalary() {
+		 return expectedSalary;
+	 }
 
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
