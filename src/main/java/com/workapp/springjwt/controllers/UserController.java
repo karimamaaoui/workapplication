@@ -25,6 +25,7 @@ import com.workapp.springjwt.repository.UserRepository;
 import com.workapp.springjwt.security.services.UserDetailsImpl;
 import com.workapp.springjwt.security.services.UserDetailsServiceImpl;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
 public class UserController {

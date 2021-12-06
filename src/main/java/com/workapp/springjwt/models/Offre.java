@@ -1,5 +1,7 @@
 package com.workapp.springjwt.models;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,37 +11,46 @@ import javax.persistence.Table;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@EnableSwagger2
 @Entity
 @Table(name = "offre")
 public class Offre {
 
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private Integer id;
+		private Long id;
 
-		@Column(length = 20)
-		private String name;
+		@Column()
+		private Long posteNumber;
+
+		@Column()
+		private Date published;
+
+	
+		@Column()
+		private String jobRequirements;
+		
+		@Column(length = 50)
+		private String email;
+		
+
+		@Column()
+		private String description;
+		
+		@Column(length = 30)
+		private String country;
 		
 		@Column(length = 20)
 		private String title;
 
-		public Integer getId() {
+		public Long getId() {
 			return id;
 		}
 
-		public void setId(Integer id) {
+		public void setId(Long id) {
 			this.id = id;
 		}
 
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
+		
 		public String getTitle() {
 			return title;
 		}
@@ -48,17 +59,75 @@ public class Offre {
 			this.title = title;
 		}
 
-		public Offre(Integer id, String name,String title) {
+		public Offre( Long posteNumber, String title, String jobRequirements, String email, String country,
+				Date published, String description) {
 			super();
-			this.id = id;
-			this.name = name;
+			this.posteNumber = posteNumber;
+			this.published = published;
+			this.jobRequirements = jobRequirements;
+			this.email = email;
+			this.country = country;
 			this.title = title;
-
+			this.description=description;
 		}
-		
+
+				
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
+		}
+
 		public Offre()
 		{
 			
 		}
 
+		public Long getPosteNumber() {
+			return posteNumber;
+		}
+
+		public void setPosteNumber(Long posteNumber) {
+			this.posteNumber = posteNumber;
+		}
+
+
+
+		public String getJobRequirements() {
+			return jobRequirements;
+		}
+
+		public void setJobRequirements(String jobRequirements) {
+			this.jobRequirements = jobRequirements;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getCountry() {
+			return country;
+		}
+
+		public void setCountry(String country) {
+			this.country = country;
+		}
+
+		
+		public Date getPublished() {
+			return published;
+		}
+
+		public void setPublished(Date published) {
+			this.published = published;
+		}
+
+		
+		
 }
